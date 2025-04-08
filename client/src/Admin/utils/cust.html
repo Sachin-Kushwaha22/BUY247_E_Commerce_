@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Customers</h1>
+            <div class="search-container">
+                <i class="fa fa-search"></i>
+                <input type="text" placeholder="Search customers...">
+            </div>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card dark">
+                <div class="stat-title">Total Customers</div>
+                <div class="stat-value">
+                    45,439
+                    <i class="fa fa-users"></i>
+                </div>
+                <div class="stat-change positive">+12.56% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">New Customers</div>
+                <div class="stat-value">
+                    1,243
+                    <i class="fa fa-user-plus"></i>
+                </div>
+                <div class="stat-change positive">+5.28% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Repeat Customers</div>
+                <div class="stat-value">
+                    31,872
+                    <i class="fa fa-user-check"></i>
+                </div>
+                <div class="stat-change positive">+2.11% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Churn Rate</div>
+                <div class="stat-value">
+                    2.3%
+                    <i class="fa fa-user-minus"></i>
+                </div>
+                <div class="stat-change negative">+0.2% from last month</div>
+            </div>
+        </div>
+        
+        <div class="customer-metrics">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div>
+                        <div class="metric-title">Average Order Value</div>
+                        <div class="metric-value">$84.32</div>
+                        <div class="metric-change positive">+3.2% from last month</div>
+                    </div>
+                    <div class="metric-icon">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div>
+                        <div class="metric-title">Customer Lifetime Value</div>
+                        <div class="metric-value">$562.48</div>
+                        <div class="metric-change positive">+2.7% from last month</div>
+                    </div>
+                    <div class="metric-icon">
+                        <i class="fa fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div>
+                        <div class="metric-title">Purchase Frequency</div>
+                        <div class="metric-value">2.8</div>
+                        <div class="metric-change positive">+0.2 from last month</div>
+                    </div>
+                    <div class="metric-icon">
+                        <i class="fa fa-calendar-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-header">
+            <h2>Customer List</h2>
+            <a href="#" class="view-all">
+                View All <i class="fa fa-chevron-right"></i>
+            </a>
+        </div>
+        
+        <div class="filters">
+            <div class="filter active">
+                <i class="fa fa-users"></i>
+                All Customers
+            </div>
+            <div class="filter">
+                <i class="fa fa-user-check"></i>
+                Active
+            </div>
+            <div class="filter">
+                <i class="fa fa-user-clock"></i>
+                Pending
+            </div>
+            <div class="filter">
+                <i class="fa fa-user-slash"></i>
+                Inactive
+            </div>
+            <div class="filter">
+                <i class="fa fa-filter"></i>
+                More Filters
+            </div>
+        </div>
+        
+        <div class="customers-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Location</th>
+                        <th>Joined</th>
+                        <th>Orders</th>
+                        <th>Spent</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="customer-info">
+                                <div class="customer-avatar">AH</div>
+                                <div class="customer-details">
+                                    <div class="customer-name">Allinata Homaku</div>
+                                    <div class="customer-email">allinata@example.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>New York, USA</td>
+                        <td>Jan 15, 2023</td>
+                        <td>24</td>
+                        <td>$1,245.00</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn edit"><i class="fa fa-edit"></i></button>
+                                <button class="action-btn delete"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="customer-info">
+                                <div class="customer-avatar">MT</div>
+                                <div class="customer-details">
+                                    <div class="customer-name">Makulam Tarsun</div>
+                                    <div class="customer-email">makulam@example.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>London, UK</td>
+                        <td>Feb 3, 2023</td>
+                        <td>17</td>
+                        <td>$876.50</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn edit"><i class="fa fa-edit"></i></button>
+                                <button class="action-btn delete"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="customer-info">
+                                <div class="customer-avatar">DI</div>
+                                <div class="customer-details">
+                                    <div class="customer-name">Demanda Inhan</div>
+                                    <div class="customer-email">demanda@example.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Sydney, AUS</td>
+                        <td>Mar 22, 2023</td>
+                        <td>9</td>
+                        <td>$432.80</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn edit"><i class="fa fa-edit"></i></button>
+                                <button class="action-btn delete"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="customer-info">
+                                <div class="customer-avatar">HN</div>
+                                <div class="customer-details">
+                                    <div class="customer-name">Hasunta Nambes</div>
+                                    <div class="customer-email">hasunta@example.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Toronto, CA</td>
+                        <td>Apr 5, 2023</td>
+                        <td>12</td>
+                        <td>$789.30</td>
+                        <td><span class="status pending">Pending</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn edit"><i class="fa fa-edit"></i></button>
+                                <button class="action-btn delete"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="customer-info">
+                                <div class="customer-avatar">GK</div>
+                                <div class="customer-details">
+                                    <div class="customer-name">Geogia Kamuta</div>
+                                    <div class="customer-email">geogia@example.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Berlin, DE</td>
+                        <td>May 17, 2023</td>
+                        <td>6</td>
+                        <td>$321.45</td>
+                        <td><span class="status inactive">Inactive</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn edit"><i class="fa fa-edit"></i></button>
+                                <button class="action-btn delete"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="customer-info">
+                                <div class="customer-avatar">JD</div>
+                                <div class="customer-details">
+                                    <div class="customer-name">John Doe</div>
+                                    <div class="customer-email">john@example.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Paris, FR</td>
+                        <td>Jun 8, 2023</td>
+                        <td>3</td>
+                        <td>$152.75</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn edit"><i class="fa fa-edit"></i></button>
+                                <button class="action-btn delete"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="pagination">
+            <button class="page-btn"><i class="fa fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn">5</button>
+            <button class="page-btn"><i class="fa fa-chevron-right"></i></button>
+        </div>
+    </div>
+</body>
+</html>

@@ -62,8 +62,11 @@ exports.updateStatus = async (req, res) => {
 
 exports.getAllOrders = async (req, res) => {
     try {
-        const { adminId } = req.params
-        const redisData = await client.get(`allOrdersAdmin:${adminId}`)
+        const page = req.query.page || 1
+        const limit = req.query.limit || 20
+        const offset = (page - 1) * limit
+        const cacheKey = `orders_page_${page}_limit_${limit}`
+        const redisData = await client.get(cacheKey)
         if(redisData) return res.status(200).json({ message: 'all orders list', allOrders:JSON.parse(redisData)})
         
         const allOrders = await pool.query(
@@ -85,13 +88,15 @@ exports.getAllOrders = async (req, res) => {
 
             from orders o
             join users u on o.userid = u.id
-            join products p on o.pid = p.id`
+            join products p on o.pid = p.id
+            limit $1 offset $2`,
+            [limit, offset]
         )
 
         if (allOrders.rowCount === 0) {
             return res.status(404).json({ message:'data not found'})
         }
-        await client.setex(`allOrdersAdmin:${adminId}`,3600, JSON.stringify(allOrders.rows))
+        await client.setex(cacheKey,3600, JSON.stringify(allOrders.rows))
         return res.status(200).json({ message: 'all orders list', allOrders: allOrders.rows})
 
     } catch (error) {

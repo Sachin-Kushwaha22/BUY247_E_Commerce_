@@ -3,12 +3,29 @@ const client = require('../config/redis');
 
 exports.getProducts = async (req, res) => {
     try {
-        const redisProducts = await client.get(`allProducts`)
-        if(redisProducts) return res.status(200).json({message:'All products by admin', products: JSON.parse(redisProducts)})
-        const result = await pool.query("SELECT * FROM products ORDER BY created_at DESC");
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const offset = (page - 1) * limit;
+        const cacheKey = `products_page_${page}_limit_${limit}`;
+
+        // Check if cached data exists in Redis
+        const cachedProducts = await client.get(cacheKey);
+        if (cachedProducts) {
+            const parsedProducts = JSON.parse(cachedProducts);
+            const hasMore = parsedProducts.length < limit ? false : true;
+            return res.status(200).json({
+                message: 'Cached products list',
+                products: parsedProducts,
+                hasMore
+            });
+        }
+        const result = await pool.query(
+            `SELECT * FROM products ORDER BY id ASC LIMIT $1 OFFSET $2`,
+            [limit, offset]
+        );
         if(result.rowCount === 0) return res.status(200).json({message:'Data not found'})
 
-        await client.setex(`allProducts`, 3600, JSON.stringify(result.rows))
+        await client.setex(cacheKey, 3600, JSON.stringify(result.rows))
         res.status(200).json({
             success: true,
             products: result.rows,
@@ -34,7 +51,9 @@ exports.addProducts = async (req, res) => {
 
         if (addProducts.rows.length === 0) return res.status(400).json({ message: 'error while adding products' })
         
-        await client.del('allProducts')
+        const keys = await client.keys("products_page_*"); 
+        if (keys.length > 0) await client.del(keys); 
+        
         res.status(201).json(addProducts.rows[0]);
     } catch (error) {
         console.log('addProducts error', error)
@@ -75,7 +94,9 @@ exports.updateProducts = async (req, res) => {
             return res.status(404).json({ message: "Product not found." });
         }
 
-        await client.del('allProducts')
+        const keys = await client.keys("products_page_*"); 
+        if (keys.length > 0) await client.del(keys); 
+
         res.status(200).json({
             message: "Product updated successfully.",
             product: result.rows[0],
@@ -98,7 +119,9 @@ exports.deleteProducts = async (req, res) => {
 
         if(deleteProduct.rowCount === 0) return res.status(404).json({message:'product not found'})
         
-        await client.del('allProducts')
+        const keys = await client.keys("products_page_*"); 
+        if (keys.length > 0) await client.del(keys); 
+
         return res.status(200).json({ message:"product deleted successfully", product:deleteProduct.rows[0] })
     } catch (error) {
         console.error("Error deleting product:", error);
@@ -122,7 +145,9 @@ exports.toggleProductStatus = async (req, res) => {
             return res.status(404).json({ message: "Product not found." });
         }
 
-        await client.del('allProducts')
+        const keys = await client.keys("products_page_*"); 
+        if (keys.length > 0) await client.del(keys); 
+
         res.status(200).json({
             success: true,
             message: `Product ${is_active ? "enabled" : "disabled"} successfully.`,
@@ -164,7 +189,9 @@ exports.bulkAddProducts = async (req, res) => {
 
         const result = await pool.query(query, values)
 
-        await client.del('allProducts')
+        const keys = await client.keys("products_page_*"); 
+        if (keys.length > 0) await client.del(keys); 
+        
         res.status(201).json({
             success: true,
             message: `${result.rowCount} products uploaded successfully.`,

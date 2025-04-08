@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Geist+Mono:wght@100..900&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rajdhani:wght@300;400;500;600;700&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.loginpage-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #bdc3c7;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    /* background-image: radial-gradient( circle 341px at 10% 20%,  rgba(132,94,194,1) 0%, rgba(196,243,251,1) 90% );; */
+    background-color: #fff1bd;
+    color: rgb(0, 0, 0);
+}
+
+.login-floating{
+    background-color: #ffffff;
+    width: 80%;
+    height: 90vh;
+    display: flex;
+    border-radius: 25px;
+}
+
+.login-leftside{
+    position: relative;
+    overflow: hidden;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #ffffff00;
+    border-radius: 25px 25px 25px 25px;
+}
+
+.login-rightside{
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-leftside::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to left, rgb(255, 255, 255), transparent);
+  }
+
+.login-container {
+    
+    width: 100%;
+    max-width: 400px;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.login-header {
+    margin-bottom: 30px;
+    font-family: "Kanit", sans-serif;
+}
+
+.login-header h1 {
+    font-size: 32px;
+    color: #2d2d2d;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.login-header p {
+    color: #878787;
+    font-size: 14px;
+}
+
+.login-form{
+    font-family: "Kanit", sans-serif;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: transparent;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: white;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #6c9bd9;
+}
+
+.form-control::placeholder {
+    color: #777;
+}
+
+.form-icon {
+    position: relative;
+}
+
+.form-icon i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+}
+
+.form-icon input {
+    padding-left: 40px;
+    color: #696969;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.checkbox-group {
+    color: #5d5c5c;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group input {
+    margin-right: 8px;
+}
+
+.forgot-link {
+    color: #949494;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-link:hover {
+    color: rgb(94, 94, 94);
+}
+
+.login-btn {
+    font-family: "Kanit", sans-serif;
+    width: 100%;
+    padding: 7px;
+    background-color: #313335;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+.login-btn:hover {
+    background-color: #151a1c;
+}
+
+.line-break{
+    width: 50%;
+    justify-self: center;
+    outline: solid rgb(193, 193, 193) 1px;
+}
+.otp-login-btn{
+    margin-top: 20px;
+    font-family: "Kanit", sans-serif;
+    width: 80%;
+    padding: 5px;
+    background-color: #c4c4c417;
+    color: #131212;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: solid 1px rgba(0, 0, 0, 0.463);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+}
+
+.mail-svg{
+    width: 30px;
+    height: 30px;
+    padding-right: 10px;
+}
+.pass-svg{
+    fill: rgb(70, 69, 69);
+    width: 30px;
+    height: 30px;
+    padding-right: 5px;
+}
+
+.register-link {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #878787;
+}
+
+.register-link a {
+    color: rgb(0, 65, 140);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+.input-box-svg{
+    margin: 0;
+    margin-top: 5px;
+    width: 20px;
+    height: 27px;
+    fill: grey;
+}
+
+.svg1{
+    
+    width: auto;
+    height: 100%;
+}
+
+.login-logo{
+    width: 200px;
+}
+
+.err-text{
+    font-size: 14px;
+    font-weight: 300;
+    color: #FF0000;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.err-text-otp{
+    margin-top: 5px;
+    width: 276px;
+    justify-content: center;
+}
+
+.err-svg{
+    width: 18px;
+    height: 18px;
+    fill: #FF0000;
+    padding-right: 2px;
+}
+
+.otp-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.otp-input-box{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 5px;
+    border: solid 1px black;
+}
+
+.timer{
+    font-size: 14px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    justify-self: center;
+    width: 288px;
+}
+
+.resend-btn{
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    cursor: pointer;
+}
+
+.resend-btn:hover{
+    text-decoration: underline;
+}
+.resend-btn:disabled{
+    color: #000000;
+    text-decoration: none;
+}

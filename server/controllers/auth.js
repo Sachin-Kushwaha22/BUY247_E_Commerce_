@@ -8,7 +8,7 @@ const path = require('path')
 const { addToOTPQueue } = require('../config/queue')
 const transporter = require('../config/nodemailer')
 
-const { sendMessage } = require('../config/twilio')
+const rateLimit = require("express-rate-limit");
 
 exports.registerUser = async (req, res) => {
 
@@ -63,13 +63,13 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
-        const { phone_number, email, password, otp } = req.body;
+        const { phone_number, email, password, otp, role = 'user'} = req.body;
         let getUser = await client.get(`checkUser:${phone_number || email}`)
         let user = JSON.parse(getUser)
         if (!user) {
             getUser = await pool.query(
-                `select * from users where email = $1 or phone_number = $2`,
-                [email, phone_number]
+                `select * from users where email = $1 or phone_number = $2 and role = $3`,
+                [email, phone_number, role]
             )
             if (getUser.rowCount === 0) return res.status(401).json({ Message: 'unexpected error occured' })
             user = getUser.rows[0]
@@ -89,7 +89,7 @@ exports.loginUser = async (req, res) => {
                 sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
                 maxAge: 24 * 60 * 60 * 1000 // 1 day
             })
-            await client.del(`otp:120`)
+            
             return res.status(200).json({ message: "LoggedIn Successfully" })
         }
 
@@ -122,6 +122,24 @@ exports.loginUser = async (req, res) => {
     }
 }
 
+exports.logoutUser = async (req, res) => {
+    try {
+        const token = req.cookies?.authToken
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized' })
+        }
+
+        res.clearCookie("authToken");
+
+        return res.status(201).json('Logout Successfully')
+
+
+    } catch (error) {
+        console.error('logout error:', error);
+        res.status(500).json({ message: 'Server error during logout' });
+    }
+}
+
 exports.checkExisting = async (req, res) => {
     try {
         const { phone_number, email } = req.body;
@@ -134,7 +152,8 @@ exports.checkExisting = async (req, res) => {
         if (doExist.rowCount > 0) {
             const identifier = phone_number ? `otp:${phone_number}` : `otp:${email}`;
             await client.setex(identifier, 1200, JSON.stringify(doExist.rows[0]))
-            return res.status(200).json({ message: 'Already Exist', user: doExist.rows })
+            const message = await generateOTP(phone_number, email)
+            return res.status(200).json({ message: `user exist otp send ${message}`, user: doExist.rows })
         }
 
         return res.status(404).json({ message: 'Data not found' })
@@ -146,58 +165,71 @@ exports.checkExisting = async (req, res) => {
 }
 
 
-const mail = async (to, otp) => {
+exports.generateResendOTP = async (req, res) => {
     try {
-        const info = await transporter.sendMail({
-            from: '"BUY247" <buy247n@gmail.com>',
-            to: to,
-            subject: "Your OTP Code - BUY247",
-            html: `<div style="max-width: 600px; margin: auto; padding: 20px; font-family: Arial, sans-serif; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
-    <h2 style="color: #333; text-align: center;">Transaction Alert</h2>
-    <p>Dear Customer,</p>
-    <p>Your account XXXX5678 has been credited with <strong>₹5,000.00</strong>.</p>
-    <p>Transaction Details:</p>
-    <ul style="list-style: none; padding: 0; font-size: 14px;">
-        <li><strong>Amount:</strong> ₹5,000.00</li>
-        <li><strong>Date:</strong> ${new Date().toLocaleDateString()}</li>
-        <li><strong>Reference No:</strong> TXN${Math.floor(Math.random() * 1000000000)}</li>
-        <li><strong>Remarks:</strong> Cashback Credit</li>
-    </ul>
-    <p>Your available balance is: <strong>₹32,540.75</strong></p>
-    <p style="font-size: 12px; color: #666;">If you did not perform this transaction, please contact customer support immediately.</p>
-    <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
-    <p style="font-size: 12px; color: #666; text-align: center;">This is an auto-generated email. Please do not reply.</p>
-</div>`,
-            attachments: [
-                {
-                    filename: '24.png',
-                    path: path.resolve(__dirname, '24.png'),
-                    cid: 'logo' // Same as used in `cid:logo` inside HTML
-                }
-            ]
-        });
+        const { phone_number, email } = req.body;
+        const message = await generateOTP(phone_number, email)
 
-        console.log("Email sent:", info.response);
-
+        return res.status(200).json('otp generated')
     } catch (error) {
-        console.error("Error sending email:", error);
-
+        console.log(error);
+        
+        return res.status(500).json('Server error by generating otp after resend')
     }
 }
 
-
-
-exports.generateOTP = async (req, res) => {
-    const { phone_number, email } = req.body;
+const generateOTP = async (phone_number, email) => {
     const otp = Math.floor(100000 + Math.random() * 900000)
-    await sendMessage(phone_number, otp)
     if (email) {
         await addToOTPQueue(email, otp)
         // mail(email, otp)
-        await client.setex(`otp:${email}`, 180, otp)
+        await client.setex(`otp:${email}`, 300, otp)
+        return true
+    }else{
+        // const identifier = phone_number ? `otp:${phone_number}` : `otp:${email}`;
+        // sendOTP(phone_number)
+        // await client.setex(`otp:${phone_number}`, 180, otp);
+        // return { message: 'otp is generated' }
     }
-    const identifier = phone_number ? `otp:${phone_number}` : `otp:${email}`;
-    await client.setex(identifier, 180, otp);
-    return res.status(200).json({ message: 'otp is generated' })
 }
 
+
+
+// const mail = async (to, otp) => {
+//     try {
+//         const info = await transporter.sendMail({
+//             from: '"BUY247" <buy247n@gmail.com>',
+//             to: to,
+//             subject: "Your OTP Code - BUY247",
+//             html: `<div style="max-width: 600px; margin: auto; padding: 20px; font-family: Arial, sans-serif; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+//     <h2 style="color: #333; text-align: center;">Transaction Alert</h2>
+//     <p>Dear Customer,</p>
+//     <p>Your account XXXX5678 has been credited with <strong>₹5,000.00</strong>.</p>
+//     <p>Transaction Details:</p>
+//     <ul style="list-style: none; padding: 0; font-size: 14px;">
+//         <li><strong>Amount:</strong> ₹5,000.00</li>
+//         <li><strong>Date:</strong> ${new Date().toLocaleDateString()}</li>
+//         <li><strong>Reference No:</strong> TXN${Math.floor(Math.random() * 1000000000)}</li>
+//         <li><strong>Remarks:</strong> Cashback Credit</li>
+//     </ul>
+//     <p>Your available balance is: <strong>₹32,540.75</strong></p>
+//     <p style="font-size: 12px; color: #666;">If you did not perform this transaction, please contact customer support immediately.</p>
+//     <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+//     <p style="font-size: 12px; color: #666; text-align: center;">This is an auto-generated email. Please do not reply.</p>
+// </div>`,
+//             attachments: [
+//                 {
+//                     filename: '24.png',
+//                     path: path.resolve(__dirname, '24.png'),
+//                     cid: 'logo' // Same as used in `cid:logo` inside HTML
+//                 }
+//             ]
+//         });
+
+//         console.log("Email sent:", info.response);
+
+//     } catch (error) {
+//         console.error("Error sending email:", error);
+
+//     }
+// }

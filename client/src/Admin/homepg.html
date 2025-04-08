@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                ✕ <span>Horizon</span>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="/api/placeholder/80/80" alt="Daniel Kevin">
+                </div>
+                <div class="user-name">Daniel Kevin</div>
+                <div class="user-email">danielkevin@gmail.com</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-bar"></i> Statistics
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-users"></i> Audience
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-envelope"></i> Message
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-bullhorn"></i> Campaigns
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i> Performance
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-history"></i> History
+                </a>
+            </nav>
+            <a href="#" class="logout">
+                <i class="fas fa-sign-out-alt"></i> Log out
+            </a>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1 class="page-title">Dashboard</h1>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </div>
+            
+            <!-- Metrics Row -->
+            <div class="metrics-container">
+                <div class="metric-card dark">
+                    <div class="metric-info">
+                        <h3>Total Revenue</h3>
+                        <div class="value">$11,354.00</div>
+                        <div class="percentage up">+6.32%</div>
+                    </div>
+                    <div class="metric-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-info">
+                        <h3>Total Customer</h3>
+                        <div class="value">45,439</div>
+                        <div class="percentage up">+12.56%</div>
+                    </div>
+                    <div class="metric-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-info">
+                        <h3>Total Profit</h3>
+                        <div class="value">$8,354.00</div>
+                        <div class="percentage up">+3.12%</div>
+                    </div>
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chart Section -->
+            <div class="chart-section">
+                <div class="section-header">
+                    <h2 class="section-title">Spending Statistic</h2>
+                    <div class="time-filter">
+                        <button class="filter-btn">Day</button>
+                        <button class="filter-btn active">Week</button>
+                        <button class="filter-btn">Month</button>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-y-axis">
+                        <div>01:00 AM</div>
+                        <div>12:00 AM</div>
+                        <div>01:00 PM</div>
+                        <div>12:00 PM</div>
+                    </div>
+                    
+                    <div class="chart-data">
+                        <div class="chart-column">
+                            <div class="chart-bar-container">
+                                <div class="chart-bar" style="height: 120px;"></div>
+                                <div class="chart-bar secondary" style="height: 80px;"></div>
+                            </div>
+                            <div class="chart-day">Sat</div>
+                        </div>
+                        
+                        <div class="chart-column">
+                            <div class="chart-bar-container">
+                                <div class="chart-bar" style="height: 150px;"></div>
+                                <div class="chart-bar secondary" style="height: 90px;"></div>
+                            </div>
+                            <div class="chart-day">Sun</div>
+                        </div>
+                        
+                        <div class="chart-column">
+                            <div class="chart-bar-container">
+                                <div class="chart-bar" style="height: 130px;"></div>
+                                <div class="chart-bar secondary" style="height: 100px;"></div>
+                            </div>
+                            <div class="chart-day">Mon</div>
+                        </div>
+                        
+                        <div class="chart-column">
+                            <div class="chart-bar-container">
+                                <div class="chart-bar" style="height: 180px;"></div>
+                                <div class="chart-bar secondary" style="height: 110px;"></div>
+                            </div>
+                            <div class="chart-day">Tue</div>
+                        </div>
+                        
+                        <div class="chart-column">
+                            <div class="chart-bar-container">
+                                <div class="chart-bar" style="height: 100px;"></div>
+                                <div class="chart-bar secondary" style="height: 120px;"></div>
+                            </div>
+                            <div class="chart-day">Wed</div>
+                        </div>
+                        
+                        <div class="chart-column">
+                            <div class="chart-bar-container">
+                                <div class="chart-bar" style="height: 140px;"></div>
+                                <div class="chart-bar secondary" style="height: 70px;"></div>
+                            </div>
+                            <div class="chart-day">Thu</div>
+                        </div>
+                        
+                        <div class="chart-column">
+                            <div class="chart-bar-container">
+                                <div class="chart-bar" style="height: 160px;"></div>
+                                <div class="chart-bar secondary" style="height: 90px;"></div>
+                            </div>
+                            <div class="chart-day">Fri</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Orders Table -->
+                <div class="table-section">
+                    <div class="section-header">
+                        <h2 class="section-title">latest order</h2>
+                        <a href="#" class="view-all">
+                            View All <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01</td>
+                                <td>#12345</td>
+                                <td>Nov 20th, 22</td>
+                                <td>$50.00</td>
+                                <td><span class="status-badge">New order</span></td>
+                            </tr>
+                            <tr>
+                                <td>02</td>
+                                <td>#32456</td>
+                                <td>Nov 19th, 22</td>
+                                <td>$60.00</td>
+                                <td><span class="status-badge">On Delivery</span></td>
+                            </tr>
+                            <tr>
+                                <td>03</td>
+                                <td>#43567</td>
+                                <td>Nov 19th, 22</td>
+                                <td>$45.00</td>
+                                <td><span class="status-badge">Available</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Map and Recent Sales -->
+                <div>
+                    <div class="map-section">
+                        <div class="section-header">
+                            <h2 class="section-title">Customer by country</h2>
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                        
+                        <div class="world-map">
+                            <div class="map-tooltip">
+                                Sweden<br>
+                                Customer Loyalty
+                            </div>
+                        </div>
+                        
+                        <div class="map-legend">
+                            <input type="range" class="range-slider" min="0" max="200" value="120">
+                            <div class="range-values">
+                                <span>0</span>
+                                <span>50</span>
+                                <span>100</span>
+                                <span>150</span>
+                                <span>200</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-sales">
+                        <div class="section-header">
+                            <h2 class="section-title">Recent Sales</h2>
+                            <a href="#" class="view-all">
+                                View All <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="sales-item">
+                            <div class="sales-info">
+                                <div class="customer-avatar">
+                                    <img src="/api/placeholder/40/40" alt="Customer">
+                                </div>
+                                <div class="customer-details">
+                                    <h4>Allinata Homaku</h4>
+                                    <p>02 Minutes Ago</p>
+                                </div>
+                            </div>
+                            <div class="sales-amount">+$89.00</div>
+                        </div>
+                        
+                        <div class="sales-item">
+                            <div class="sales-info">
+                                <div class="customer-avatar">
+                                    <img src="/api/placeholder/40/40" alt="Customer">
+                                </div>
+                                <div class="customer-details">
+                                    <h4>Makulam Tarsun</h4>
+                                    <p>02 Minutes Ago</p>
+                                </div>
+                            </div>
+                            <div class="sales-amount">+$123.00</div>
+                        </div>
+                        
+                        <div class="sales-item">
+                            <div class="sales-info">
+                                <div class="customer-avatar">
+                                    <img src="/api/placeholder/40/40" alt="Customer">
+                                </div>
+                                <div class="customer-details">
+                                    <h4>Demanda Inhan</h4>
+                                    <p>03 Minutes Ago</p>
+                                </div>
+                            </div>
+                            <div class="sales-amount">+$34.00</div>
+                        </div>
+                        
+                        <div class="sales-item">
+                            <div class="sales-info">
+                                <div class="customer-avatar">
+                                    <img src="/api/placeholder/40/40" alt="Customer">
+                                </div>
+                                <div class="customer-details">
+                                    <h4>Hasunta Nambes</h4>
+                                    <p>04 Minutes Ago</p>
+                                </div>
+                            </div>
+                            <div class="sales-amount">+$72.00</div>
+                        </div>
+                        
+                        <div class="sales-item">
+                            <div class="sales-info">
+                                <div class="customer-avatar">
+                                    <img src="/api/placeholder/40/40" alt="Customer">
+                                </div>
+                                <div class="customer-details">
+                                    <h4>Geogia Kamuta</h4>
+                                    <p>05 Minutes Ago</p>
+                                </div>
+                            </div>
+                            <div class="sales-amount">+$31.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

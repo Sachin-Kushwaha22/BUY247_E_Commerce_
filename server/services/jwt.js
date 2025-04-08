@@ -5,10 +5,10 @@ exports.setUser = (user) => {
         id:user.id,
         fname:user.fname,
         lname:user.lname,
-        email:user.email,
-        role:user.role
+        emailOrPhone:user.email ? user.email : user.phone_number,
+        role:user.role,
+        profilePic:user.profilepic
     }
-    console.log('payload', payload)
     return jwt.sign(
         payload, process.env.JWT_SECRET, { expiresIn: '1d' }
     );

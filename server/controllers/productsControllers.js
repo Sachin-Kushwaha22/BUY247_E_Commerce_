@@ -3,35 +3,55 @@ const client = require('../config/redis');
 
 exports.getProducts = async (req, res) => {
     try {
-        const redisProducts = await client.get(`allProducts`)
-        if (redisProducts) return res.status(200).json({ message: 'All products list', products: JSON.parse(redisProducts) });
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const offset = (page - 1) * limit;
+        const cacheKey = `products_page_${page}_limit_${limit}`;
+
+        // Check if cached data exists in Redis
+        const cachedProducts = await client.get(cacheKey);
+        if (cachedProducts) {
+            const parsedProducts = JSON.parse(cachedProducts);
+            const hasMore = parsedProducts.length < limit ? false : true;
+            return res.status(200).json({
+                message: 'Cached products list',
+                products: parsedProducts,
+                hasMore
+            });
+        }
+
+        // Fetch paginated products
         const products = await pool.query(
-            `select * from products`
+            `SELECT * FROM products ORDER BY id ASC LIMIT $1 OFFSET $2`,
+            [limit, offset]
         );
 
-        if (products.rowCount === 0) return res.status(404).json({ message: 'no products found' })
+        if (products.rowCount === 0) {
+            return res.status(200).json({ message: 'No more products', products: [], hasMore: false });
+        }
 
-        await client.set(`allProducts`, JSON.stringify(products.rows))
-        res.status(200).json(products.rows);
+        // Cache this page for 1 hour
+        await client.setex(cacheKey, 3600, JSON.stringify(products.rows));
+        const hasMore = products.rowCount < limit ? false : true
+        res.status(200).json({ message: 'Fetched products', products: products.rows, hasMore });
     } catch (error) {
-        console.log('getProducts error', error)
-        return res.status(500).json({ message: 'Server error during fetching products' });
+        console.error('getProducts error', error);
+        return res.status(500).json({ message: 'Server error while fetching products' });
     }
 }
 
 exports.getProductById = async (req, res) => {
     try {
         const { id } = req.params;
-        const redisProductById = await client.get(`products:1`)
-        const productById = JSON.parse(redisProductById).find(product => product.id === id)
-        if (productById) return res.status(200).json({ message: 'Product by Id', product: productById })
+        const redisProductById = await client.get(`product_by_id:${id}`)
+        if (redisProductById) return res.status(200).json({ message: 'Product by Id', product: JSON.parse(redisProductById) })
         const product = await pool.query(
             `select * from products where id = $1`,
             [id]
         );
 
         if (product.rowCount === 0) return res.status(404).json({ message: "product not found" })
-
+        await client.setex(`product_by_id:${id}`, 3600, JSON.stringify(product.rows))
         return res.status(200).json({ message: "Successfully fetch product ", product: product.rows[0] })
     } catch (error) {
         console.log('getProductById error', error)

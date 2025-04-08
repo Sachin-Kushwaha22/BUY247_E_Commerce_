@@ -21,7 +21,7 @@ exports.orderItem = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
     try {
-        const { o_id, payment_status } = req.query
+        const { o_id, payment_status } = req.body
 
         if (!o_id || payment_status !== 'Paid') {
             return res.status(400).json({ message: "Missing required fields: o_id or payment_status" });

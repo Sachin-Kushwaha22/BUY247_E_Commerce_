@@ -3,17 +3,23 @@ const router = Router()
 const rateLimit = require("express-rate-limit");
 
 const otpLimiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute
+    windowMs: 60 * 5000, // 5 minute
     max: 1, // Allow only 1 request per minute per IP
     message: "Too many OTP requests, please try again later.",
     headers: true, // Send rate limit headers
 });
 
 
-const { registerUser, loginUser, checkExisting, generateOTP } = require('../controllers/auth')
+const { registerUser, loginUser, logoutUser, checkExisting, generateResendOTP } = require('../controllers/auth');
+const { checkAdminAuth, logoutAdmin } = require('../controllers/admins');
+const { adminAuth } = require('../middlewares/auth');
 
 router.route('/signup').post(registerUser)
 router.route('/signin').post(loginUser)
-router.route('/doExist').get(checkExisting)
-router.post('/generateOTP', otpLimiter, generateOTP)
+router.route('/logout').post(logoutUser)
+router.route('/doExist').post(checkExisting)
+router.post('/generateOTP', otpLimiter, generateResendOTP)
+
+router.get('/checkAdminAuth', checkAdminAuth)
+router.get('/adminLogout', adminAuth, logoutAdmin)
 module.exports = router
