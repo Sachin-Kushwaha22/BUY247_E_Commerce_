@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RazorPay from './RazorPay';
 import AdminSign from './Admin/Authentication/adminSignin';
 import AdminDashboard from './Admin/landingpage'
-import HomePage from './Home/HomePage';
+import HomePage from './Home/homepage';
 import ProtectedRoute from './Protected Routes/ProtectedRoute';
 import SigninRoute from './Protected Routes/AdminSigninRoute';
 import UserDashboard from './Customers/Profile';
