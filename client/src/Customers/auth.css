@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+.user-signup-container{
+    background-color: #d4d4d4;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.user-signup{
+    background-color: #fbe9ff;
+    display: flex;
+    flex-direction: row;
+    height: 85%;
+    width: 70%;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.or{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: small;
+    margin: 20px 0;
+    color: #8a8a8a;
+}
+
+
+.line{
+    width: 100px;
+    border: solid 1px #c6c0c0;
+}
+
+.move-left {
+    transform: translateX(-100%);
+  }
+  
+  .move-right {
+    transform: translateX(100%);
+  }
+.left-section {
+    background-color: #8b5cb5;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+    /* border-radius: 5px 20px 20px 5px ; */
+    transition: transform 200ms ease-in-out;
+}
+.signup-leftside-img{
+    width: 95%;
+}
+
+.right-section {
+    position: relative;
+    width: 50%;
+    background-color: #fbe9ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;overflow: hidden;
+    border-radius: 0px 10px 10px 0px;
+    transition: transform 200ms ease-in-out;
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 450px;
+}
+
+.signup-heading {
+    font-size: 2rem;
+    color: #5c4761;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.extra-margin{
+    margin-bottom: 40px;
+}
+.logo-signup{
+    margin-top: 5px;
+}
+
+.form-group {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #5c4761;
+    margin-bottom: 0.4rem;
+}
+
+.userPassword{
+    margin-bottom: 10px;
+}
+.form-group-show-pass{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+.form-label-show-pass {
+    font-size: 0.9rem;
+    padding-left: 5px;
+    color: #5c4761;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.name-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.name-group .form-group {
+    flex: 1;
+}
+
+.signin-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #5c4761;
+}
+
+.signin-link a {
+    color: #ff5c8d;
+    margin-left: 0.3rem;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.terms {
+    margin: 1rem 0;
+    font-size: 0.8rem;
+    color: #5c4761;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.terms input {
+    margin-top: 0.2rem;
+}
+
+.terms a {
+    color: #ff5c8d;
+    text-decoration: none;
+}
+
+.create-btn {
+    width: 100%;
+    background-color: #ff5c8d;
+    color: white;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    box-shadow: 0 5px 15px rgba(255, 92, 141, 0.4);
+}
+.mail-svg-signin{
+    width: 20px;
+    height: 20px;
+    margin: 0px 5px;
+}
+
+.otp-signin-btn{
+    width: 300px;
+    background-color: #ff5c8d00;
+    color: rgb(71, 71, 71);
+    padding: 0.5rem;
+    border: solid 1px ;
+    border-radius: 50px;
+    font-size: .9rem;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+}
+.back-btn{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    background-color: transparent;
+    border-radius: 100%;
+    fill: #ff5c8d;
+    box-shadow: 0 5px 15px rgba(255, 92, 141, 0.4);
+    cursor: pointer;
+}
+
+.otp-send-text{
+    width: 70%;
+    text-align: center;
+    justify-self: center;
+    color: rgb(40, 39, 39);
+    font-size: .95rem;
+    word-break: normal;
+    word-wrap: break-word;
+    margin-bottom: 30px;
+}
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .left-section {
+        width: 100%;
+        min-height: 300px;
+    }
+
+    .right-section {
+        width: 100%;
+        padding: 2rem 1rem;
+    }
+
+    .name-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

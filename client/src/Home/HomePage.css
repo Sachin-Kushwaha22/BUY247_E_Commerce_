@@ -1,0 +1,241 @@
+*{
+    scrollbar-width: none;
+}
+
+.hm-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.hm-logo {
+    width: 170px;
+    margin: 0;
+}
+
+.hm-search-container {
+    flex-grow: 1;
+    margin: 0 30px;
+    position: relative;
+}
+
+.hm-search-container input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #e1e1e1;
+    outline: none;
+}
+
+.hm-search-container button {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.hm-nav-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.hm-login-container {
+    position: relative;
+    margin-right: 20px;
+}
+
+.hm-login-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+}
+
+.hm-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    right: 0;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.hm-login-container:hover .hm-dropdown-content {
+    display: block;
+}
+
+.hm-dropdown-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.hm-dropdown-content input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+}
+
+.hm-dropdown-content button {
+    padding: 8px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.hm-cart-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.hm-slider-container {
+    margin-top: 70px;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hm-slider {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.hm-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #2980b9;
+}
+
+.slide-animation{
+    animation: slide 500ms ease-in;
+}
+@keyframes slide{
+    from{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(-100%);
+    }
+}
+.hm-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hm-slide-content {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+    max-width: 500px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.hm-slide-content h2 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.hm-slide-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.hm-slide-btn {
+    padding: 12px 25px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hm-products-container {
+    padding: 50px;
+}
+
+.hm-products-title {
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.hm-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.hm-product-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.hm-product-card:hover {
+    transform: translateY(-5px);
+}
+
+.hm-product-image {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.hm-product-info {
+    padding: 15px;
+}
+
+.hm-product-name {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.hm-product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+.hm-add-to-cart {
+    width: 100%;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hm-add-to-cart:hover {
+    background-color: #2980b9;
+}
