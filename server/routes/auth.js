@@ -10,16 +10,18 @@ const otpLimiter = rateLimit({
 });
 
 
-const { registerUser, loginUser, logoutUser, checkExisting, generateResendOTP } = require('../controllers/auth');
-const { checkAdminAuth, logoutAdmin } = require('../controllers/admins');
+const { registerUser, loginUser, logoutUser, checkExisting, checkSignupExisting, generateResendOTP } = require('../controllers/auth');
+const { adminLogin, checkAdminAuth, logoutAdmin } = require('../controllers/admins');
 const { adminAuth } = require('../middlewares/auth');
 
 router.route('/signup').post(registerUser)
 router.route('/signin').post(loginUser)
 router.route('/logout').post(logoutUser)
 router.route('/doExist').post(checkExisting)
+router.route('/signup/doExist').post(checkSignupExisting)
 router.post('/generateOTP', otpLimiter, generateResendOTP)
 
 router.get('/checkAdminAuth', checkAdminAuth)
+router.route('/admin').post(adminLogin)
 router.get('/adminLogout', adminAuth, logoutAdmin)
 module.exports = router

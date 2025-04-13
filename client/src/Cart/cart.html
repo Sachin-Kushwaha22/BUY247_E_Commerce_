@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - ShopEasy</title>
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="crt-navbar">
+        <div class="crt-logo">
+            <a href="#" class="crt-logo-text">Flipkart</a>
+            <span class="crt-logo-subtext">Explore Plus</span>
+        </div>
+        <div class="crt-search-container">
+            <input type="text" placeholder="Search for products, brands and more">
+            <button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2874f0" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="crt-nav-buttons">
+            <button class="crt-login-btn">Login</button>
+            <span class="crt-user-name">Sachin</span>
+            <span class="crt-more-btn">More</span>
+            <a href="#" class="crt-cart-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 5px; vertical-align: text-top;">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                Cart
+            </a>
+        </div>
+    </nav>
+
+    <!-- Cart With Products View -->
+    <div class="crt-cart-with-products crt-show-with-products">
+        <div class="crt-container">
+            <div class="crt-left-panel">
+                <div class="crt-card crt-address-card">
+                    <div>From Saved Addresses</div>
+                    <button class="crt-pincode-btn">Enter Delivery Pincode</button>
+                </div>
+                
+                <div class="crt-card">
+                    <!-- Product 1 (Out of stock) -->
+                    <div class="crt-product-item">
+                        <img src="/api/placeholder/120/120" alt="Product 1" class="crt-product-img">
+                        <div class="crt-product-details">
+                            <h3 class="crt-product-title">Lil Tara Deadpool - Most Loved Comic Super Hero Figure</h3>
+                            <p class="crt-product-variant">Multicolor</p>
+                            <p class="crt-out-of-stock">Out Of Stock</p>
+                            <div class="crt-action-btns">
+                                <span class="crt-action-link">SAVE FOR LATER</span>
+                                <span class="crt-action-link">REMOVE</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 2 (In stock) -->
+                    <div class="crt-product-item">
+                        <img src="/api/placeholder/120/120" alt="Product 2" class="crt-product-img">
+                        <div class="crt-product-details">
+                            <h3 class="crt-product-title">Toys World 3D Fast Steering Remote Car</h3>
+                            <p class="crt-product-variant">Red</p>
+                            <p class="crt-product-seller">Seller: Whitedevil</p>
+                            <div class="crt-price-container">
+                                <span class="crt-discounted-price">₹250</span>
+                                <span class="crt-original-price">₹599</span>
+                                <span class="crt-discount-percent">58% Off</span>
+                            </div>
+                            <p>Delivery by Thu Apr 17 | <span style="color: #388e3c">Free</span></p>
+                            <div class="crt-quantity-container">
+                                <button class="crt-quantity-btn">-</button>
+                                <input type="text" value="1" class="crt-quantity-input">
+                                <button class="crt-quantity-btn">+</button>
+                            </div>
+                            <div class="crt-action-btns">
+                                <span class="crt-action-link">SAVE FOR LATER</span>
+                                <span class="crt-action-link">REMOVE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="crt-place-order-btn">PLACE ORDER</button>
+            </div>
+            
+            <div class="crt-right-panel">
+                <div class="crt-price-details">
+                    <h3 class="crt-price-title">PRICE DETAILS</h3>
+                    
+                    <div class="crt-price-row">
+                        <span>Price (1 item)</span>
+                        <span>₹599</span>
+                    </div>
+                    
+                    <div class="crt-price-row">
+                        <span>Discount</span>
+                        <span style="color: #388e3c">- ₹349</span>
+                    </div>
+                    
+                    <div class="crt-price-row">
+                        <span>Platform Fee</span>
+                        <span>₹3</span>
+                    </div>
+                    
+                    <div class="crt-price-row">
+                        <span>Delivery Charges</span>
+                        <span style="color: #388e3c">Free</span>
+                    </div>
+                    
+                    <div class="crt-total-row">
+                        <span>Total Amount</span>
+                        <span>₹253</span>
+                    </div>
+                    
+                    <div class="crt-savings">
+                        You will save ₹346 on this order
+                    </div>
+                </div>
+                
+                <div class="crt-safe-msg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#878787" viewBox="0 0 16 16" class="crt-security-icon">
+                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                    </svg>
+                    Safe and Secure Payments. Easy returns. 100% Authentic products.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="crt-footer">
+        <div class="crt-footer-links">
+            <div>Policies: Returns Policy | Terms of use | Security | Privacy</div>
+            <div>© 2007-2025 Flipkart.com</div>
+            <div>Need help? Visit the <a href="#" style="color: #2874f0">Help Center</a> or <a href="#" style="color: #2874f0">Contact Us</a></div>
+        </div>
+    </div>
+
+
+</body>
+</html>

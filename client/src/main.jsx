@@ -4,9 +4,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RazorPay from './RazorPay';
 import AdminSign from './Admin/Authentication/adminSignin';
 import AdminDashboard from './Admin/landingpage'
-import HomePage from './Home/homepage';
+import HomePage from './Home/HomePage';
 import ProtectedRoute from './Protected Routes/ProtectedRoute';
-import SigninRoute from './Protected Routes/SigninRoute';
+import SigninRoute from './Protected Routes/AdminSigninRoute';
+import UserDashboard from './Customers/Profile';
+import UserAuth from './Customers/Auth';
+import UserAuthRoute from './Protected Routes/UserAuthRoute';
+import Cart from './Cart/Cart';
 // Define routes properly
 const router = createBrowserRouter([
   { path: '/', element: <HomePage /> },
@@ -25,6 +29,26 @@ const router = createBrowserRouter([
       <ProtectedRoute>
          {(adminData) => <AdminDashboard admin={adminData} />}
       </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/user/profile',
+    element: (
+      <UserDashboard />
+    ),
+  },
+  {
+    path: '/user/auth',
+    element: (
+      <UserAuthRoute>
+        <UserAuth />
+      </UserAuthRoute>
+    ),
+  },
+  {
+    path: '/user/cart',
+    element: (
+        <Cart />
     ),
   },
 ]);

@@ -15,33 +15,29 @@ exports.registerUser = async (req, res) => {
     try {
         const { phone_number, otp, fname, lname, email, password } = req.body;
 
-        // hash password before saving
+        const identifier = phone_number ? `otp:${phone_number}` : `otp:${email}`;
+        const redisOTP = await client.get(identifier)
+        if (!redisOTP) return res.status(404).json({ message: 'otp not generated' })
+        if (redisOTP !== otp) return res.status(404).json({ message: 'Invalid OTP' })
+
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
 
-        // insert new user now
         const result = await pool.query(
             `insert into users(fname, lname, email, phone_number, password) 
             values($1, $2, $3, $4, $5) RETURNING id, fname, lname, email, role, created_at`,
             [fname, lname, email, phone_number, hashedPassword]
         )
-        if (result.rows.length === 0) return res.status(400).json({ message: ' registration failed' })
+        if (result.rows.length === 0) return res.status(400).json({ message: 'registration failed' })
 
-        const identifier = phone_number ? `otp:${phone_number}` : `otp:${email}`;
-        const redisOTP = await client.get(identifier)
-        if (!redisOTP) return res.status(401).json({ message: 'otp not generated' })
-
-        if (redisOTP !== otp) return res.status(401).json({ message: 'Invalid OTP' })
-
-        // console.log('result',result.rows[0])
         const token = setUser(result.rows[0])
 
-        if (!token) return res.status(401).json({ message: 'token not created' })
+        if (!token) return res.status(404).json({ message: 'token not created' })
         res.cookie('authToken', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // Only secure in production
+            secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-            maxAge: 24 * 60 * 60 * 1000 // 1 day
+            maxAge: 24 * 60 * 60 * 1000
         })
 
         const user = result.rows[0];
@@ -63,17 +59,15 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
-        const { phone_number, email, password, otp, role = 'user'} = req.body;
-        let getUser = await client.get(`checkUser:${phone_number || email}`)
-        let user = JSON.parse(getUser)
-        if (!user) {
-            getUser = await pool.query(
-                `select * from users where email = $1 or phone_number = $2 and role = $3`,
-                [email, phone_number, role]
-            )
-            if (getUser.rowCount === 0) return res.status(401).json({ Message: 'unexpected error occured' })
-            user = getUser.rows[0]
-        }
+        const { phone_number, email, password, otp, role = 'user' } = req.body;
+
+        const getUser = await pool.query(
+            `select * from users where email = $1 or phone_number = $2 and role = $3`,
+            [email, phone_number, role]
+        )
+        if (getUser.rowCount === 0) return res.status(401).json({ Message: 'unexpected error occured' })
+        const user = getUser.rows[0]
+
 
         if (otp) {
             const identifier = phone_number ? `otp:${phone_number}` : `otp:${email}`;
@@ -89,14 +83,12 @@ exports.loginUser = async (req, res) => {
                 sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
                 maxAge: 24 * 60 * 60 * 1000 // 1 day
             })
-            
+
             return res.status(200).json({ message: "LoggedIn Successfully" })
         }
 
 
         let checkPassword = user.password
-
-        console.log(checkPassword);
 
         const isPasswordValid = await bcrypt.compare(password, checkPassword)
 
@@ -161,7 +153,28 @@ exports.checkExisting = async (req, res) => {
         console.error('checking existing user phone or email error:', error);
         return res.status(500).json({ message: 'Server error during checking existing phone or email' });
     }
+}
+exports.checkSignupExisting = async (req, res) => {
+    try {
+        const { phone_number, email } = req.body;
 
+        const doExist = await pool.query(
+            `SELECT * FROM users WHERE email = $1 OR phone_number = $2`,
+            [email, phone_number]
+        )
+
+        if (doExist.rowCount > 0) {
+            const identifier = phone_number ? `otp:${phone_number}` : `otp:${email}`;
+            await client.setex(identifier, 1200, JSON.stringify(doExist.rows[0]))
+            return res.status(200).json({ message: `user already exist ` })
+        }
+
+        await generateOTP(phone_number, email)
+        return res.status(404).json({ message: 'Data not found' })
+    } catch (error) {
+        console.error('checking existing user phone or email error:', error);
+        return res.status(500).json({ message: 'Server error during checking existing phone or email' });
+    }
 }
 
 
@@ -173,7 +186,7 @@ exports.generateResendOTP = async (req, res) => {
         return res.status(200).json('otp generated')
     } catch (error) {
         console.log(error);
-        
+
         return res.status(500).json('Server error by generating otp after resend')
     }
 }
@@ -185,7 +198,7 @@ const generateOTP = async (phone_number, email) => {
         // mail(email, otp)
         await client.setex(`otp:${email}`, 300, otp)
         return true
-    }else{
+    } else {
         // const identifier = phone_number ? `otp:${phone_number}` : `otp:${email}`;
         // sendOTP(phone_number)
         // await client.setex(`otp:${phone_number}`, 180, otp);

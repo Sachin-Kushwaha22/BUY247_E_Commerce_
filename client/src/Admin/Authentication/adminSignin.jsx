@@ -34,7 +34,7 @@ function adminSign() {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(`${serverUrl}/api/auth/signin`,{
+      const response = await axios.post(`${serverUrl}/api/auth/admin`,{
         email:formData.email,
         password:formData.password
       },{
