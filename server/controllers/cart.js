@@ -3,7 +3,8 @@ const client = require('../config/redis')
 
 exports.getCartItems = async (req, res) => {
     try {
-        const { id } = req.params
+        // const { id } = req.params
+        const id = req.user.id
         const cacheData = await client.get(`cartItems:${id}`)
 
         if(cacheData) return  res.status(200).json({message:'Cart Items', cartItems:JSON.parse(cacheData)})
@@ -38,7 +39,8 @@ exports.getCartItems = async (req, res) => {
 
 exports.addToCart = async (req, res) => {
     try {
-        const { uid, pid } = req.query
+        const { pid } = req.params
+        const uid = req.user.id
 
         const doExist = await pool.query(
             'SELECT * FROM cart WHERE productid = $1 and userid = $2', [pid, uid]

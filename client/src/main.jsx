@@ -11,23 +11,31 @@ import UserDashboard from './Customers/Profile';
 import UserAuth from './Customers/Auth';
 import UserAuthRoute from './Protected Routes/UserAuthRoute';
 import Cart from './Cart/Cart';
+import { CartProvider } from './Context/CartContext';
+import CartPageProvider from './Protected Routes/CartPageProvider';
+
 // Define routes properly
 const router = createBrowserRouter([
-  { path: '/', element: <HomePage /> },
+  {
+    path: '/', element: (
+      <HomePage />
+
+    )
+  },
   { path: '/payment', element: <RazorPay /> },
   {
     path: '/admin/signin',
     element: (
       <SigninRoute>
         <AdminSign />
-    </SigninRoute>
+      </SigninRoute>
     )
   },
   {
     path: '/admin/dashboard',
     element: (
       <ProtectedRoute>
-         {(adminData) => <AdminDashboard admin={adminData} />}
+        {(adminData) => <AdminDashboard admin={adminData} />}
       </ProtectedRoute>
     ),
   },
@@ -48,7 +56,9 @@ const router = createBrowserRouter([
   {
     path: '/user/cart',
     element: (
-        <Cart />
+      <CartPageProvider>
+        {(cart) => <Cart cart={cart} />}
+      </CartPageProvider>
     ),
   },
 ]);
@@ -56,6 +66,8 @@ const router = createBrowserRouter([
 // Render the RouterProvider with the defined router
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
   </StrictMode>
 );

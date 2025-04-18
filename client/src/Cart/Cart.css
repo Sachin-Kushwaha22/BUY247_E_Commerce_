@@ -1,13 +1,5 @@
-.crt-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 50px;
-    background-color: #2874f0;
-    color: white;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+.crt-nav-shadow{
+    height: 70px;
 }
 
 .crt-logo {

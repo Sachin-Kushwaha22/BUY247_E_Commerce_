@@ -10,7 +10,7 @@ exports.setUser = (user) => {
         profilePic:user.profilepic
     }
     return jwt.sign(
-        payload, process.env.JWT_SECRET, { expireIn: '1d' }
+        payload, process.env.JWT_SECRET
     );
 }
 
