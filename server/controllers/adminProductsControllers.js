@@ -36,13 +36,46 @@ exports.getProducts = async (req, res) => {
     }
 };
 
-exports.addProducts = async (req, res) => {
-    const { name, description, price, stock, category, brand, image_url } = req.body;
 
-    if (!name || !description || !category || !brand || !image_url || !price || !stock) {
+
+
+
+const {cloudinary} = require('../config/cloudinary'); // adjust path as needed
+const multer = require('multer');
+const streamifier = require('streamifier');
+
+// Memory storage for multer
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+exports.uploadImageMiddleware = upload.single('image'); 
+
+exports.addProducts = async (req, res) => {
+    const { name, description, price, stock, category, brand } = req.body;
+
+    if (!name || !description || !category || !brand || !price || !stock) {
         return res.status(400).json({ message: "Missing required fields" });
     }
     try {
+
+         // Upload to cloudinary
+         const streamUpload = (req) => {
+            return new Promise((resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream((error, result) => {
+                    if (result) {
+                        resolve(result);
+                    } else {
+                        reject(error);
+                    }
+                });
+                streamifier.createReadStream(req.file.buffer).pipe(stream);
+            });
+        };
+
+        const result = await streamUpload(req);
+        const image_url = result.secure_url;
+
+
         const addProducts = await pool.query(
             `insert into products(name, description, price, stock, category, brand, image_url)
             Values($1, $2, $3, $4, $5, $6, $7 ) returning *`,

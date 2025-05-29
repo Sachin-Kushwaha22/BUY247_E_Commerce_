@@ -22,7 +22,7 @@ exports.getProducts = async (req, res) => {
 
         // Fetch paginated products
         const products = await pool.query(
-            `SELECT * FROM products ORDER BY id ASC LIMIT $1 OFFSET $2`,
+            `SELECT * FROM products ORDER BY updated_at desc LIMIT $1 OFFSET $2`,
             [limit, offset]
         );
 
