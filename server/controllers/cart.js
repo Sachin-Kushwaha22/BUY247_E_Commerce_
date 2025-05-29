@@ -1,6 +1,8 @@
 const pool = require('../config/database')
 const client = require('../config/redis')
 
+
+
 exports.getCartItems = async (req, res) => {
     try {
         // const { id } = req.params
@@ -66,7 +68,8 @@ exports.addToCart = async (req, res) => {
 
 exports.removeFromCart = async (req, res) => {
     try {
-        const { uid, cartid } = req.query
+        const uid = req.user.id
+        const { cartid } = req.params
 
         const remove = await pool.query(
             `DELETE FROM cart WHERE id = $1 RETURNING *`,
@@ -87,7 +90,8 @@ exports.removeFromCart = async (req, res) => {
 
 exports.changeItemQuantity = async (req, res) => {
     try {
-        const { uid, cartid, quantity } = req.query
+        const uid = req.user.id;
+        const { cartid, quantity } = req.body
         
         if(quantity === 'inc'){
             const query =  `update cart
@@ -112,6 +116,8 @@ exports.changeItemQuantity = async (req, res) => {
             await client.del(`cartItems:${uid}`)
             return res.status(200).json({message:'quantity increases by 1', product:itemQuantity.rows})
         }
+
+        return res.status(404).json({ message: 'Invalid quantity alter request' })
     } catch (error) {
         console.log("Error from changeItemQuantity", error)
         return res.status(500).json({ message: 'Server error during changing product quantity in cart' })

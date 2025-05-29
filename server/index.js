@@ -15,6 +15,7 @@ const orderRoute = require('./routes/orders')
 const adminOrdersRoute = require('./routes/adminOrdersRoute')
 const checkoutRoute = require('./routes/checkout')
 const adminRoute = require('./routes/admins')
+const addressRoute = require('./routes/addressRoute')
 
 require('dotenv').config();
 const app = express();
@@ -58,9 +59,10 @@ app.use('/cart', restrictAuth, cartRoute)
 app.use('/order', restrictAuth, orderRoute)
 app.use('/checkout', restrictAuth, checkoutRoute)
 app.use('/admin/order', adminAuth, adminOrdersRoute)
-app.use('/api/admin/products', adminAuth, adminProductsRoute)
+app.use('/api/admin/products', adminProductsRoute)
 app.use('/api/auth', auth)
 app.use('/api/admin', adminAuth, adminRoute)
+app.use('/api/address',restrictAuth, addressRoute)
 
 
 const PORT = process.env.PORT
