@@ -1,0 +1,63 @@
+.po-cartContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid rgb(192, 186, 186);
+}
+
+.overview-price-proceed-div{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.overview-billing-div{
+    width: 100%;
+}
+.proceed-to-payment {
+    font-size: 22px;
+    font-weight: 500;
+    padding: 10px 40px;
+    margin: 40px 0;
+    cursor: pointer;
+    transition: transform 300ms, box-shadow 300ms;
+    transform: translateZ(0); /* Fix blurriness */
+
+    color: white;
+    background-color: #ff6200;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+.proceed-to-payment:hover {
+    transform: scale(1.05);
+}
+
+.orderItems-empty-div{
+    background-color: #e1dedc;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    padding: 150px 0;
+}
+
+.orderItems-empty{
+    font-size: 4rem;
+    color: rgb(92, 88, 88);
+}
+
+.explore-product-btn{
+    font-size: 25px;
+    font-weight: 500;
+    padding:10px 50px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background-color:#ff6200;
+    color: white;
+    cursor: pointer;
+}

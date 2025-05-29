@@ -11,23 +11,36 @@ import UserDashboard from './Customers/Profile';
 import UserAuth from './Customers/Auth';
 import UserAuthRoute from './Protected Routes/UserAuthRoute';
 import Cart from './Cart/Cart';
+import { CartProvider } from './Context/CartContext';
+import CartPageProvider from './Protected Routes/CartPageProvider';
+import ViewCartAndProductRoute from './Protected Routes/ViewCartAndProductRoute';
+import Order from '../Order/Order';
+import OrderItemProvider from './Protected Routes/OrderItemProvider';
+
 // Define routes properly
 const router = createBrowserRouter([
-  { path: '/', element: <HomePage /> },
+  {
+    path: '/', element: (
+      <CartPageProvider>
+        {(cart, getCartItem) => <HomePage cart={cart} getCartItem={getCartItem} />}
+      </CartPageProvider>
+
+    )
+  },
   { path: '/payment', element: <RazorPay /> },
   {
     path: '/admin/signin',
     element: (
       <SigninRoute>
         <AdminSign />
-    </SigninRoute>
+      </SigninRoute>
     )
   },
   {
     path: '/admin/dashboard',
     element: (
       <ProtectedRoute>
-         {(adminData) => <AdminDashboard admin={adminData} />}
+        {(adminData) => <AdminDashboard admin={adminData} />}
       </ProtectedRoute>
     ),
   },
@@ -48,7 +61,23 @@ const router = createBrowserRouter([
   {
     path: '/user/cart',
     element: (
-        <Cart />
+      <CartPageProvider>
+        {(cart, getCartItem) => <Cart cart={cart} getCartItem={getCartItem} />}
+      </CartPageProvider>
+    ),
+  },
+  {
+    path: '/product/:pid',
+    element: (
+      <ViewCartAndProductRoute />
+    ),
+  },
+  {
+    path: '/order/checkout/:oid',
+    element: (
+      <OrderItemProvider>
+        { (orderItems, getOrderItem) => <Order orderItems={orderItems} getOrderItem={getOrderItem} />}
+      </OrderItemProvider>
     ),
   },
 ]);
@@ -56,6 +85,8 @@ const router = createBrowserRouter([
 // Render the RouterProvider with the defined router
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
   </StrictMode>
 );
