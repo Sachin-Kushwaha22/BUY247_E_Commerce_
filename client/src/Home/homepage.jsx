@@ -4,12 +4,12 @@ import NavBar from './NavBar';
 import Slides from './Slides';
 import Products from './Products';
 
-function HomePage() {
+function HomePage({cart, getCartItem}) {
     return (
         <div>
-            <NavBar />
+            <NavBar cart={cart} />
             <Slides />
-            <Products />
+            <Products getCartItem={getCartItem}/>
         </div>
         )
 }

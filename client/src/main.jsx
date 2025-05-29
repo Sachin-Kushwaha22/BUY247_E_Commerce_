@@ -13,12 +13,17 @@ import UserAuthRoute from './Protected Routes/UserAuthRoute';
 import Cart from './Cart/Cart';
 import { CartProvider } from './Context/CartContext';
 import CartPageProvider from './Protected Routes/CartPageProvider';
+import ViewCartAndProductRoute from './Protected Routes/ViewCartAndProductRoute';
+import Order from '../Order/Order';
+import OrderItemProvider from './Protected Routes/OrderItemProvider';
 
 // Define routes properly
 const router = createBrowserRouter([
   {
     path: '/', element: (
-      <HomePage />
+      <CartPageProvider>
+        {(cart, getCartItem) => <HomePage cart={cart} getCartItem={getCartItem} />}
+      </CartPageProvider>
 
     )
   },
@@ -57,8 +62,22 @@ const router = createBrowserRouter([
     path: '/user/cart',
     element: (
       <CartPageProvider>
-        {(cart) => <Cart cart={cart} />}
+        {(cart, getCartItem) => <Cart cart={cart} getCartItem={getCartItem} />}
       </CartPageProvider>
+    ),
+  },
+  {
+    path: '/product/:pid',
+    element: (
+      <ViewCartAndProductRoute />
+    ),
+  },
+  {
+    path: '/order/checkout/:oid',
+    element: (
+      <OrderItemProvider>
+        { (orderItems, getOrderItem) => <Order orderItems={orderItems} getOrderItem={getOrderItem} />}
+      </OrderItemProvider>
     ),
   },
 ]);
