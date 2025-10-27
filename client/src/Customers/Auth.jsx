@@ -1,11 +1,11 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './auth.css'
 import UserTimer from './UserTimer';
 import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom';
 const serverUrl = import.meta.env.VITE_SERVER_URL
 
-function Signup() {
+function Signup({signUp}) {
     const [switchSignin, setSwitchSignin] = useState(sessionStorage.getItem('userSwitch') || 'signin')
     const [otpSend, setOtpSend] = useState(sessionStorage.getItem('userSignupOtpSend') || false)
     const [signinOtpSend, setSigninOtpSend] = useState(sessionStorage.getItem('userSigninOtpSend') || false)
@@ -27,6 +27,13 @@ function Signup() {
     const [signUpBtn, setSignUpBtn] = useState(false)
     const inputRefs = useRef([]);
     const navigate = useNavigate()
+
+    useEffect(()=>{
+        if(signUp){
+            sessionStorage.setItem('userSwitch', 'signup')
+            setSwitchSignin('signup')
+        }
+    },[signUp])
 
     const handleFormDataChange = (e) => {
         const { name, value } = e.target
@@ -274,7 +281,6 @@ function Signup() {
     }
 
     return (
-        <div className="user-signup-container">
             <div className="user-signup">
                 <div style={{ borderRadius: switchSignin === 'signin' ? '20px 5px 5px 20px' : '5px 20px 20px 5px' }} className={`left-section ${switchSignin === 'signin' ? 'move-right' : ''}`}>
                     <img className='signup-leftside-img' src="/assets/svg1.png" alt="" />
@@ -546,8 +552,6 @@ function Signup() {
                     </div>}
                 </div>
             </div>
-
-        </div>
     )
 }
 
