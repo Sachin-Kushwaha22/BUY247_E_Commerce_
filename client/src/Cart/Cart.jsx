@@ -4,16 +4,35 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import serverUrl from '../../config'
+import Signup from '../Customers/Auth'
+import ModalWrapper from '../ModalWrapper'
 
 function Cart({ cart, getCartItem }) {
+  console.log("Main component rendered");
   const navigate = useNavigate()
   const [total, setTotal] = useState({})
   const [address, setAddress] = useState({})
+  const [authStatus, setAuthStatus] = useState(true)
+
+  useEffect(() => {
+    const fetchResponse = async () => {
+      const response = await getCartItem()
+      if (response?.status === 401 && response?.message === "Unauthorized") {
+        console.log("response : ", response);
+        setAuthStatus(true)
+        
+      }
+    }
+
+    fetchResponse()
+
+  }, [])
+
   useEffect(() => {
     const totalUnit = cart.reduce((sum, item) => sum + item.quantity, 0);
     const price = cart.reduce((sum, item) => sum + Number(item.price) * item.quantity, 0);
     const totalPrice = price.toFixed(2);
-    const discount = (totalPrice * 10/100).toFixed(0)
+    const discount = (totalPrice * 10 / 100).toFixed(0)
     const delivery = totalPrice > 499 ? 0 : 60
     setTotal({
       totalUnit, totalPrice, discount, delivery
@@ -62,13 +81,13 @@ function Cart({ cart, getCartItem }) {
     }
   }
 
-  const handlePlaceOrder = async() => {
+  const handlePlaceOrder = async () => {
     try {
-      const response = await axios.post(`${serverUrl}/order/product`,{},{
-        withCredentials:true
+      const response = await axios.post(`${serverUrl}/order/product`, {}, {
+        withCredentials: true
       })
 
-      if(response.status === 200){
+      if (response.status === 200) {
         sessionStorage.removeItem('checkoutStep')
         navigate(`/order/checkout/${response.data?.orderItem?.o_id}`)
       }
@@ -87,28 +106,42 @@ function Cart({ cart, getCartItem }) {
         </div>
 
         <div className="crt-footer cart-empty-footer">
-        <div className="crt-footer-links">
-          <div>Policies: Returns Policy | Terms of use | Security | Privacy</div>
-          <div>© 2025 BUY247</div>
-          <div>
-            Need help? Visit the{" "}
-            <a
-              href="#"
-              style={{
-                color: "#2874f0",
-              }}>
-              Help Center
-            </a>{" "}
-            or{" "}
-            <a
-              href="#"
-              style={{
-                color: "#2874f0",
-              }}>
-              Contact Us
-            </a>
+          <div className="crt-footer-links">
+            <div>Policies: Returns Policy | Terms of use | Security | Privacy</div>
+            <div>© 2025 BUY247</div>
+            <div>
+              Need help? Visit the{" "}
+              <a
+                href="#"
+                style={{
+                  color: "#2874f0",
+                }}>
+                Help Center
+              </a>{" "}
+              or{" "}
+              <a
+                href="#"
+                style={{
+                  color: "#2874f0",
+                }}>
+                Contact Us
+              </a>
+            </div>
           </div>
         </div>
+
+        
+      <div>
+        {authStatus && (
+          <>
+            {console.log("Showing modal")}
+            <ModalWrapper onClose={() => setAuthStatus(false)}>
+              <Signup />
+            </ModalWrapper>
+          </>
+        )}
+
+        {!authStatus && console.log("Modal not shown")}
       </div>
       </>
     )
@@ -122,7 +155,7 @@ function Cart({ cart, getCartItem }) {
           {cart.length === 0 ? <p>Cart Empty</p> : cart.map((cart) => (
 
             <div className='cart-container-div' key={cart.cartid}>
-              <div  className='cart-box'>
+              <div className='cart-box'>
                 <div className='left-side-cart-box'>
                   <img className='cart-item-img' src={cart.image_url} alt="product_image" />
                 </div>
@@ -148,7 +181,7 @@ function Cart({ cart, getCartItem }) {
 
                   <div className="right-side-row-four">
                     <div className="delivery-details">
-                     
+
                     </div>
                     <button onClick={() => handleCartItemRemove(cart.cartid)} className='remove-cart-item'>REMOVE</button>
                   </div>
@@ -193,7 +226,7 @@ function Cart({ cart, getCartItem }) {
             <div className="price-div-content delivery-charge">
               <p className="delivery-text">Delivery Charges</p>
               {/* <p className="delivery-number">₹{total.delivery || 0}</p> */}
-              <p style={{ color: total.delivery === 0 ? 'green' : 'black' }} className="delivery-number">{total.delivery === 0 ? 'Free' : '₹'+total.delivery}</p>
+              <p style={{ color: total.delivery === 0 ? 'green' : 'black' }} className="delivery-number">{total.delivery === 0 ? 'Free' : '₹' + total.delivery}</p>
             </div>
 
             <p className="line-break-thin"></p>
@@ -231,6 +264,7 @@ function Cart({ cart, getCartItem }) {
           </div>
         </div>
       </div>
+
     </div>
 
   )

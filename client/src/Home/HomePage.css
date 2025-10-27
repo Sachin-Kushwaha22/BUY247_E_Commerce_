@@ -59,6 +59,14 @@
     position: relative;
     margin-right: 40px;
     margin-left: 20px;
+    padding: 7px 15px;
+    border: none;
+    border-radius: 7px;
+    transition: 300ms;
+}
+.hm-login-container:hover{
+    transition: 300ms;
+    background-color: #025cdb;
 }
 
 .hm-login-btn {
@@ -66,19 +74,26 @@
     border: none;
     cursor: pointer;
     font-size: 16px;
+    font-weight: 500;
     color: #2c3e50;
     display: flex;
     align-items: center;
 }
 
+.hm-login-container:hover .hm-login-btn {
+    color: #ffffff;
+  }
+
 .hm-dropdown-content {
     display: none;
     position: absolute;
+    top: 40px;
     background-color: #ffffff;
+    width: 250px;
     min-width: 200px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     z-index: 1;
-    right: 0;
+    right: -60px;
     border-radius: 5px;
     padding: 15px;
 }
@@ -87,28 +102,18 @@
     display: block;
 }
 
-.hm-dropdown-content form {
-    display: flex;
-    flex-direction: column;
-}
-
-.hm-dropdown-content input {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #e1e1e1;
-    border-radius: 4px;
-}
-
-.hm-dropdown-content button {
-    padding: 8px;
-    background-color: #3498db;
-    color: white;
+.dropDown-signup{
+    background-color: transparent;
+    color: #0564ea;
     border: none;
-    border-radius: 4px;
+    outline: none;
+    font-weight: 500;
+}
+
+.dropDown-rows:hover{
+    color: black;
     cursor: pointer;
 }
-
-
 .hm-cart-count{
     position: absolute;
     top: -10px;
